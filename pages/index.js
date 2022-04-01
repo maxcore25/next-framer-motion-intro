@@ -62,6 +62,13 @@ export default function Home({ data }) {
     e.preventDefault();
 
     const { currentTarget = {} } = e;
+    const fields = Array.from(currentTarget?.elements);
+    const fieldQuery = fields.find(field => field.name === 'query');
+
+    const value = fieldQuery.value || '';
+    const endpoint = `https://rickandmortyapi.com/api/character/?name=${value} `;
+
+    setPage({ current: endpoint });
   }
 
   return (
