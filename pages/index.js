@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character';
@@ -14,7 +16,38 @@ export async function getServerSideProps(context) {
 
 export default function Home({ data }) {
   console.log(data);
-  const { results = [] } = data;
+  const { info, results: defaultResults = [] } = data;
+  const [results, setResults] = useState(defaultResults);
+  const [page, setPage] = useState({
+    ...info,
+    current: defaultEndpoint,
+  });
+  const { current } = page;
+
+  useEffect(() => {
+    if (current === defaultEndpoint) return;
+
+    async function request() {
+      const res = await fetch(current);
+      const nextData = await res.json();
+
+      setPage({
+        ...current,
+        ...nextData.info,
+      });
+
+      if (!nextData.info?.prev) {
+        setResults(nextData.results);
+        return;
+      }
+
+      setResults(prev => {
+        return [...prev, ...nextData.results];
+      });
+    }
+
+    request();
+  }, [current]);
 
   return (
     <div className={styles.container}>
