@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+.profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
