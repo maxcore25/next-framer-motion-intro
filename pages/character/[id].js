@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
+import Link from 'next/link';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character';
 
@@ -53,6 +54,11 @@ export default function CharacterPage({ data }) {
               </li>
             </ul>
           </div>
+        </div>
+        <div className='back-btn-container'>
+          <Link href='/'>
+            <a className='back-btn'>Back To All Characters</a>
+          </Link>
         </div>
       </main>
     </div>

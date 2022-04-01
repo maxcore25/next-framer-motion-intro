@@ -20,3 +20,10 @@ a {
   align-items: center;
   gap: 20px;
 }
+.back-btn-container{
+  margin: 2rem 0;
+}
+.back-btn{
+  color: #0060ce;
+  text-decoration: underline;
+}
