@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import styles from '../styles/Home.module.css';
@@ -91,18 +92,20 @@ export default function Home({ data }) {
 
         <div className={styles.grid}>
           {results.map(result => (
-            <a
+            <Link
               key={result.id}
-              href='https://nextjs.org/docs'
-              className={styles.card}>
-              <Image
-                src={result.image}
-                width={200}
-                height={200}
-                alt={result.name}
-              />
-              <h3>{result.name}</h3>
-            </a>
+              href='/character/[id]'
+              as={`/character/${result.id}`}>
+              <a className={styles.card}>
+                <Image
+                  src={result.image}
+                  width={200}
+                  height={200}
+                  alt={result.name}
+                />
+                <h3>{result.name}</h3>
+              </a>
+            </Link>
           ))}
         </div>
 
