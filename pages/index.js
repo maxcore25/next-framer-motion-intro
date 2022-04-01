@@ -58,6 +58,12 @@ export default function Home({ data }) {
     });
   }
 
+  function handleOnSubmitSearch(e) {
+    e.preventDefault();
+
+    const { currentTarget = {} } = e;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -71,8 +77,8 @@ export default function Home({ data }) {
 
         <p className={styles.description}>Rick And Morty Wiki</p>
 
-        <form>
-          <input type='text' />
+        <form className='search' onSubmit={handleOnSubmitSearch}>
+          <input name='query' type='search' />
           <button>Search</button>
         </form>
 
