@@ -49,6 +49,15 @@ export default function Home({ data }) {
     request();
   }, [current]);
 
+  function handleLoadMore() {
+    setPage(prev => {
+      return {
+        ...prev,
+        current: page?.next,
+      };
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -61,6 +70,11 @@ export default function Home({ data }) {
         <h1 className={styles.title}>Wubba Lubba Dub Dub</h1>
 
         <p className={styles.description}>Rick And Morty Wiki</p>
+
+        <form>
+          <input type='text' />
+          <button>Search</button>
+        </form>
 
         <div className={styles.grid}>
           {results.map(result => (
@@ -77,6 +91,10 @@ export default function Home({ data }) {
               <h3>{result.name}</h3>
             </a>
           ))}
+        </div>
+
+        <div>
+          <button onClick={handleLoadMore}>Load More</button>
         </div>
       </main>
 
