@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -81,7 +82,24 @@ export default function Home({ data }) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Wubba Lubba Dub Dub</h1>
+        <motion.div
+          initial='hidden'
+          animate='visible'
+          variants={{
+            hidden: {
+              scale: 0.8,
+              opacity: 0,
+            },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              transition: {
+                delay: 0.4,
+              },
+            },
+          }}>
+          <h1 className={styles.title}>Wubba Lubba Dub Dub</h1>
+        </motion.div>
 
         <p className={styles.description}>Rick And Morty Wiki</p>
 
@@ -94,9 +112,9 @@ export default function Home({ data }) {
           {results.map(result => (
             <Link
               key={result.id}
-              href='/character/[id]'
+              passHref='/character/[id]'
               as={`/character/${result.id}`}>
-              <a className={styles.card}>
+              <motion.a className={styles.card}>
                 <Image
                   src={result.image}
                   width={200}
@@ -104,7 +122,7 @@ export default function Home({ data }) {
                   alt={result.name}
                 />
                 <h3>{result.name}</h3>
-              </a>
+              </motion.a>
             </Link>
           ))}
         </div>
