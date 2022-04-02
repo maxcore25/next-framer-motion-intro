@@ -117,7 +117,17 @@ export default function Home({ data }) {
               passHref>
               <motion.a
                 className={styles.card}
-                whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}>
+                whileHover={{
+                  scale: [1, 1.15, 1.1],
+                  rotate: [0, 10, -10, 0],
+                  filter: [
+                    'hue-rotate(0) contrast(100%)',
+                    'hue-rotate(360deg) contrast(200%)',
+                    'hue-rotate(45deg) contrast(300%)',
+                    'hue-rotate(0) contrast(100%)',
+                  ],
+                  transition: { duration: 0.3 },
+                }}>
                 <Image
                   src={result.image}
                   width={200}
