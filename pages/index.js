@@ -112,9 +112,12 @@ export default function Home({ data }) {
           {results.map(result => (
             <Link
               key={result.id}
-              passHref='/character/[id]'
-              as={`/character/${result.id}`}>
-              <motion.a className={styles.card}>
+              href='/character/[id]'
+              as={`/character/${result.id}`}
+              passHref>
+              <motion.a
+                className={styles.card}
+                whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}>
                 <Image
                   src={result.image}
                   width={200}
