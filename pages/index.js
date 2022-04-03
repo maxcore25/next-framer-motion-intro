@@ -18,6 +18,7 @@ export async function getServerSideProps(context) {
 
 export default function Home({ data }) {
   const { ref: myRef, inView: myElementIsVisible } = useInView();
+  const { ref: rocketRef, inView: rocketIsVisible } = useInView();
 
   // const myRef = useRef();
   // const [myElementIsVisible, setMyElementIsVisible] = useState();
@@ -156,6 +157,9 @@ export default function Home({ data }) {
         <h1 ref={myRef}>
           Want To Get More??? - {myElementIsVisible ? 'Yes!' : 'No!'}
         </h1>
+        <p ref={rocketRef}>
+          <span className={`rocket`}>🚀</span>
+        </p>
         <div>
           <button onClick={handleLoadMore}>Load More</button>
         </div>

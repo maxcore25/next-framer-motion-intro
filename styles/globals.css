@@ -27,3 +27,7 @@ a {
   color: #0060ce;
   text-decoration: underline;
 }
+
+.rocket{
+  display: inline-block;
+}
