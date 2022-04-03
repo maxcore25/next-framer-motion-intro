@@ -17,12 +17,15 @@ export async function getServerSideProps(context) {
 
 export default function Home({ data }) {
   const myRef = useRef();
+  const [myElementIsVisible, setMyElementIsVisible] = useState();
+  console.log('myElementIsVisible', myElementIsVisible);
   useEffect(() => {
     // console.log('myRef', myRef.current);
     const observer = new IntersectionObserver(entries => {
       const entry = entries[0];
-      console.log(entry);
+      setMyElementIsVisible(entry.isIntersecting);
     });
+    observer.observe(myRef.current);
   }, []);
 
   console.log(data);
@@ -148,7 +151,9 @@ export default function Home({ data }) {
           ))}
         </div>
 
-        <h1 ref={myRef}>Want To Get More???</h1>
+        <h1 ref={myRef}>
+          Want To Get More??? - {myElementIsVisible ? 'Yes!' : 'No!'}
+        </h1>
         <div>
           <button onClick={handleLoadMore}>Load More</button>
         </div>
