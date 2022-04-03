@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 import styles from '../styles/Home.module.css';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character';
@@ -17,6 +18,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ data }) {
+  const myRef = useRef();
   console.log(data);
   const { info, results: defaultResults = [] } = data;
   const [results, setResults] = useState(defaultResults);
@@ -140,6 +142,7 @@ export default function Home({ data }) {
           ))}
         </div>
 
+        <h1>Want To Get More???</h1>
         <div>
           <button onClick={handleLoadMore}>Load More</button>
         </div>
