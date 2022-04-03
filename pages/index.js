@@ -18,7 +18,11 @@ export async function getServerSideProps(context) {
 export default function Home({ data }) {
   const myRef = useRef();
   useEffect(() => {
-    console.log('myRef', myRef.current);
+    // console.log('myRef', myRef.current);
+    const observer = new IntersectionObserver(entries => {
+      const entry = entries[0];
+      console.log(entry);
+    });
   }, []);
 
   console.log(data);
