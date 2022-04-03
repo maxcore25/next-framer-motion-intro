@@ -158,7 +158,9 @@ export default function Home({ data }) {
           Want To Get More??? - {myElementIsVisible ? 'Yes!' : 'No!'}
         </h1>
         <p ref={rocketRef}>
-          <span className={`rocket`}>🚀</span>
+          <span className={`rocket ${rocketIsVisible ? 'animateRocket' : ''}`}>
+            🚀
+          </span>
         </p>
         <div>
           <button onClick={handleLoadMore}>Load More</button>
