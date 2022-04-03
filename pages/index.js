@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import styles from '../styles/Home.module.css';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character';
@@ -16,17 +17,18 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ data }) {
-  const myRef = useRef();
-  const [myElementIsVisible, setMyElementIsVisible] = useState();
-  console.log('myElementIsVisible', myElementIsVisible);
-  useEffect(() => {
-    // console.log('myRef', myRef.current);
-    const observer = new IntersectionObserver(entries => {
-      const entry = entries[0];
-      setMyElementIsVisible(entry.isIntersecting);
-    });
-    observer.observe(myRef.current);
-  }, []);
+  const { ref: myRef, inView: myElementIsVisible } = useInView();
+
+  // const myRef = useRef();
+  // const [myElementIsVisible, setMyElementIsVisible] = useState();
+  // useEffect(() => {
+  //   // console.log('myRef', myRef.current);
+  //   const observer = new IntersectionObserver(entries => {
+  //     const entry = entries[0];
+  //     setMyElementIsVisible(entry.isIntersecting);
+  //   });
+  //   observer.observe(myRef.current);
+  // }, []);
 
   console.log(data);
   const { info, results: defaultResults = [] } = data;
