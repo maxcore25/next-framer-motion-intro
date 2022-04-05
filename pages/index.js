@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import styles from '../styles/Home.module.css';
 
@@ -122,37 +124,43 @@ export default function Home({ data }) {
           <button>Search</button>
         </form>
 
-        <div className={styles.grid}>
-          {results.map(result => (
-            <Link
-              key={result.id}
-              href='/character/[id]'
-              as={`/character/${result.id}`}
-              passHref>
-              <motion.a
-                className={styles.card}
-                whileHover={{
-                  scale: [1, 1.15, 1.1],
-                  rotate: [0, 10, -10, 0],
-                  filter: [
-                    'hue-rotate(0) contrast(100%)',
-                    'hue-rotate(360deg) contrast(200%)',
-                    'hue-rotate(45deg) contrast(300%)',
-                    'hue-rotate(0) contrast(100%)',
-                  ],
-                  transition: { duration: 0.3 },
-                }}>
-                <Image
-                  src={result.image}
-                  width={200}
-                  height={200}
-                  alt={result.name}
-                />
-                <h3>{result.name}</h3>
-              </motion.a>
-            </Link>
-          ))}
-        </div>
+        <DragDropContext>
+          <Droppable>
+            {provided => {
+              <div className={styles.grid} {...provided.droppableProps}>
+                {results.map(result => (
+                  <Link
+                    key={result.id}
+                    href='/character/[id]'
+                    as={`/character/${result.id}`}
+                    passHref>
+                    <motion.a
+                      className={styles.card}
+                      whileHover={{
+                        scale: [1, 1.15, 1.1],
+                        rotate: [0, 10, -10, 0],
+                        filter: [
+                          'hue-rotate(0) contrast(100%)',
+                          'hue-rotate(360deg) contrast(200%)',
+                          'hue-rotate(45deg) contrast(300%)',
+                          'hue-rotate(0) contrast(100%)',
+                        ],
+                        transition: { duration: 0.3 },
+                      }}>
+                      <Image
+                        src={result.image}
+                        width={200}
+                        height={200}
+                        alt={result.name}
+                      />
+                      <h3>{result.name}</h3>
+                    </motion.a>
+                  </Link>
+                ))}
+              </div>;
+            }}
+          </Droppable>
+        </DragDropContext>
 
         <h1 ref={myRef}>
           Want To Get More??? - {myElementIsVisible ? 'Yes!' : 'No!'}
