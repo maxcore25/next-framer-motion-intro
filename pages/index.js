@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import styles from '../styles/Home.module.css';
@@ -125,37 +126,49 @@ export default function Home({ data }) {
         </form>
 
         <DragDropContext>
-          <Droppable>
+          <Droppable droppableId='characters'>
             {provided => {
-              <div className={styles.grid} {...provided.droppableProps}>
-                {results.map(result => (
-                  <Link
+              <div
+                className={styles.grid}
+                {...provided.droppableProps}
+                ref={provided.innerRef}>
+                {results.map((result, index) => (
+                  <Draggable
                     key={result.id}
-                    href='/character/[id]'
-                    as={`/character/${result.id}`}
-                    passHref>
-                    <motion.a
-                      className={styles.card}
-                      whileHover={{
-                        scale: [1, 1.15, 1.1],
-                        rotate: [0, 10, -10, 0],
-                        filter: [
-                          'hue-rotate(0) contrast(100%)',
-                          'hue-rotate(360deg) contrast(200%)',
-                          'hue-rotate(45deg) contrast(300%)',
-                          'hue-rotate(0) contrast(100%)',
-                        ],
-                        transition: { duration: 0.3 },
-                      }}>
-                      <Image
-                        src={result.image}
-                        width={200}
-                        height={200}
-                        alt={result.name}
-                      />
-                      <h3>{result.name}</h3>
-                    </motion.a>
-                  </Link>
+                    draggableId={result.id}
+                    index={index}>
+                    {provided => (
+                      <Link
+                        href='/character/[id]'
+                        as={`/character/${result.id}`}
+                        passHref
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}>
+                        <motion.a
+                          className={styles.card}
+                          whileHover={{
+                            scale: [1, 1.15, 1.1],
+                            rotate: [0, 10, -10, 0],
+                            filter: [
+                              'hue-rotate(0) contrast(100%)',
+                              'hue-rotate(360deg) contrast(200%)',
+                              'hue-rotate(45deg) contrast(300%)',
+                              'hue-rotate(0) contrast(100%)',
+                            ],
+                            transition: { duration: 0.3 },
+                          }}>
+                          <Image
+                            src={result.image}
+                            width={200}
+                            height={200}
+                            alt={result.name}
+                          />
+                          <h3>{result.name}</h3>
+                        </motion.a>
+                      </Link>
+                    )}
+                  </Draggable>
                 ))}
               </div>;
             }}
